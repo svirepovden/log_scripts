@@ -19,8 +19,12 @@ if [[ "$SHELL" == '/usr/bin/zsh' ]]; then
 			echo 'setopt incappendhistory #cmd logging' >> /etc/zsh/zshrc &&
 			echo 'precmd (){ #cmd logging' >> /etc/zsh/zshrc &&
 			echo '	command="$(fc -n -e - -l -1)" #cmd logging' >> /etc/zsh/zshrc &&
-			echo '	logger -p local1.notice -t zsh -i "$USER : $command" #cmd logging' >> /etc/zsh/zshrc && 
+			echo '	logger -p local1.notice -t zsh -i "$USER input: $command" #cmd logging' >> /etc/zsh/zshrc && 
 			echo '} #cmd logging' >> /etc/zsh/zshrc
+			echo 'preexec() { #cmd logging' >> /etc/zsh/zshrc
+			echo 'exec > > (tee ~/.command.out&) #cmd logging' >> /etc/zsh/zshrc
+			echo 'output=$(cat ~/.command.out) #cmd logging' >> /etc/zsh/zshrc
+			echo 'logger -p local1.notice -t zsh -i "$USER output: $output" #cmd logging' >> /etc/zsh/zshrc
 		fi
 
 		echo -e "\nFILE /root/.zshrc\n"
@@ -30,6 +34,11 @@ if [[ "$SHELL" == '/usr/bin/zsh' ]]; then
 		else
 			cp /root/.zshrc /root/.zshrc.back
 			sed '/precmd.*/a\\tcommand="$(fc -n -e - -l -1)" #cmd logging\n\tlogger -p local1.notice -t zsh -i "$USER : $command" #cmd logging' /root/.zshrc.back > /root/.zshrc
+			echo 'preexec() { #cmd logging' >> /root/.zshrc
+			echo 'exec > > (tee ~/.command.out&) #cmd logging' >> /root/.zshrc
+			echo 'output=$(cat ~/.command.out) #cmd logging' >> /root/.zshrc
+			echo 'logger -p local1.notice -t zsh -i "$USER output: $output" #cmd logging' >> /root/.zshrc
+
 		fi
 
 		echo -e "\nFILE /home/kali/.zshrc\n"
@@ -39,6 +48,11 @@ if [[ "$SHELL" == '/usr/bin/zsh' ]]; then
 		else
 			cp /root/.zshrc /root/.zshrc.back
 			sed '/precmd.*/a\\tcommand="$(fc -n -e - -l -1)" #cmd logging\n\tlogger -p local1.notice -t zsh -i "$USER : $command" #cmd logging' /home/kali/.zshrc.back > /home/kali/.zshrc
+			echo 'preexec() { #cmd logging' >> /home/kali/.zshrc
+			echo 'exec > > (tee ~/.command.out&) #cmd logging' >> /home/kali/.zshrc
+			echo 'output=$(cat ~/.command.out) #cmd logging' >> /home/kali/.zshrc
+			echo 'logger -p local1.notice -t zsh -i "$USER output: $output" #cmd logging' >> /ome/kali/.zshrc
+
 		fi
 
 	elif [[ "$ANSWER" == 'no' ]]; then
