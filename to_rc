@@ -1,1 +1,1 @@
-test "$(ps -ocommand= -p $PPID | awk '{print $1}')" = 'script' || (script -I $HOME/cmd_logs/$(date +"%d-%b-%y_%H-%M-%S")_stdin.log -O $HOME/cmd_logs/$(date +"%d-%b-%y_%H-%M-%S")_stdout.log)
+test "$(ps -ocommand= -p $PPID | awk '{print $1}')" = 'script' || (script -B $HOME/cmd_logs/$(date +"%d-%b-%y_%H-%M-%S")_cmd.log -T $HOME/cmd_logs/$(date +"%d-%b-%y_%H-%M-%S")_time.log) # cmd logging

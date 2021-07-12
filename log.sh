@@ -24,7 +24,7 @@ if [[ "$ANSWER" == 'yes' ]]; then
 	for dir in ${user_dirs[@]}; do
 		for rc in ${rc_files[@]}; do
 			echo "$dir/$rc"
-			if [ ! -f "$dir/$rc" ]; then
+			if [ -f "$dir/$rc" ]; then
 				echo -e "\nFILE $dir/$rc \n"
 				if grep 'cmd logging' "$dir/$rc"
 				then
