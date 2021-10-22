@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Getting users and define home folders
+# 
+#
 cat /etc/passwd | grep sh$ | cut -d: -f 1,6 > ./tmp
 for string in $(cat ./tmp) 
 do
@@ -31,7 +35,7 @@ if [[ "$ANSWER" == 'yes' ]]; then
 					echo "$dir/$rc Already changed"
 				else
 					echo "backing up $dir/$rc to $dir/$rc.back"
-					cp "$dir/$rc" "$dir/$rc.back"
+					cp -i "$dir/$rc" "$dir/$rc.back_before_logsh"
 					echo "adding log instructuons"
 					cat ./to_rc >> "$dir/$rc"
 				fi
@@ -43,5 +47,7 @@ if [[ "$ANSWER" == 'yes' ]]; then
 			else echo "$dir/cmd_logs already exists"
 			fi
 		done
-	done	
+	done
+	rm -i tmp_users
+		
 fi		
