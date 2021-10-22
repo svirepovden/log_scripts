@@ -19,6 +19,8 @@ User is important, script adds a task to user crontab.
 ## Log.sh changes your .bashrc/.zshrc files to log all terminal sessions
 
 Log.sh uses script for recoding terminal sessions. 
+    
+    ./log.sh
 
 If you need to stop recording just `exit` 
 
