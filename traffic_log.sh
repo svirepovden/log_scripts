@@ -1,16 +1,15 @@
 #!/bin/bash
-export DIR='/home/kali'
+export DIR='/root'
 echo $DIR
 start() {
 	echo "Starting traffic logging"
-	echo "*/10 * * * * echo \"tshark -i any -a duration:600 -w - | gzip -9 > $DIR/file_$(date +%F__%H_%M_%S).pcapng.gz\" " | crontab -
-#	echo "*/10 * * * * echo 'dHNoYXJrIC1pIGFueSAtYSBkdXJhdGlvbjo2MDAgLXcgLSB8IGd6aXAgLTkgPiAiL2hvbWUva2FsaS9maWxlXyQoZGF0ZSArJUZfXyVIXyVNXyVTKS5wY2FwbmcuZ3oiCg==' | base64 -d | bash " | sudo crontab -
-	1>/dev/null 2>/dev/null tshark -i any -a duration:600 -w - | gzip -9 > $DIR/file_$(date +'%F__%H_%M_%S').pcapng.gz &
+	export filename="$DIR/file_$(date +%F__%H_%M_%S).pcapng.gz"
+	echo "*/10 * * * * echo \"tshark -i any -a duration:600 -w - | gzip -9 > $filename\" " | crontab -
+	1>/dev/null 2>/dev/null tshark -i any -a duration:600 -w - | gzip -9 > "$filename" &
 }
 
 stop() {
 	echo -e "Stopping next record session\nCurrent session is still recording" 
-	#kill -TERM `ps -ef | grep -v grep | grep tshark | awk  '{ print $2 }'`
 	crontab -r
 	
 }
@@ -26,7 +25,7 @@ status() {
 
 case $1 in
   start|stop|status) $1;;
-  *) echo "Usage : $0 <start|stop|status>"; exit 1;;
+  *) echo -e "Usage : $0 <start | stop | status>\nTraffic is recorded every 10 minutes\nUser is important!"; exit 1;;
 esac
 
 exit 0
