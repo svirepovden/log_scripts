@@ -2,6 +2,7 @@
 
 ## Traffic log
 
+**DOESNT WORK PROPERLY**
 An `/etc/init.rc` init for dumping traffic from all interfaces (and 
 compress it afterwards).
 Records traffic in 10 min sessions.
