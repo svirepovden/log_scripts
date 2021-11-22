@@ -1,5 +1,4 @@
-#!/bin/bash
-
+# /lib/systemd/system/traffic_log.service
 
 # Traffic_log.sh: script which setups all traffic record to pcap
 #
@@ -26,4 +25,13 @@
 # Author: Denis Svirepov svirepovden@gmail.com
 
 
-tshark -i any -b filesize:100000 -w /var/log/traffic/traffic.pcap 
+[Unit]
+Description=Traffic_log Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/bin/traffic_log.sh
+
+[Install]
+WantedBy=multi-user.target

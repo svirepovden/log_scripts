@@ -2,20 +2,17 @@
 
 ## Traffic log
 
-**DOESNT WORK PROPERLY**
-An `/etc/init.rc` init for dumping traffic from all interfaces (and 
-compress it afterwards).
-Records traffic in 10 min sessions.
-Sessions are stored in `/root` by default
+Use `traffic_log-setup.sh` (with root permissions) to set up traffic logging.
+Traffic dumps are stored in /var/log/traffic.
 
-    ./traffic_log.sh start 
-    ./traffic_log.sh status
-    ./traffic_log.sh stop
+Set up script adds `traffic_log.sh` to `/bin/`, adds `traffic_log.service` to `/lib/systemd/system/`, start and enable it.
 
-User is important, script adds a task to user crontab.
+Traffic_log is controlled by systemd unit `traffic_log.service`
+    
+    systemctl start traffic_log.service
+    systemctl stop traffic_log.service
+    systemctl status traffic_log.service
 
-### TODO
-- chose dir to save
 
 ## Log.sh changes your .bashrc/.zshrc files to log all terminal sessions
 
@@ -29,5 +26,5 @@ Script saves files to cmd_logs (content and time)
 
 You can reply terminal session using
 
-    scriptreply time.log cmd.log [N (replay speed) ]
+    scriptreply time.log cmd.log [N (replay speed)]
 
